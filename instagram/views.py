@@ -26,7 +26,7 @@ def signup(request):
             current_user.save()
             current_site = get_current_site(request)
             mail_subject = 'Activate your instagram account.'
-            message = render_to_string('acc_active_email.html', {
+            message = render_to_string('email/instagramemail.html', {
                 'user': current_user,
                 'domain': current_site.domain,
                 'uid':urlsafe_base64_encode(force_bytes(current_user.pk)),
