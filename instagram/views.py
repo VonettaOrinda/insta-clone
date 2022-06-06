@@ -10,6 +10,7 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 # from .tokens import account_activation_token
 from django.utils.encoding import force_bytes
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -24,7 +25,7 @@ def signup(request):
             current_user.is_active = False
             current_user.save()
             current_site = get_current_site(request)
-            mail_subject = 'Activate your instapicha account.'
+            mail_subject = 'Activate your instagram account.'
             message = render_to_string('acc_active_email.html', {
                 'user': current_user,
                 'domain': current_site.domain,
@@ -39,4 +40,10 @@ def signup(request):
             return HttpResponse('Please confirm your email address to complete the registration')
     else:
         form = SignupForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'all-insta/signup.html', {'form': form})
+
+# @login_required(login_url='/accounts/login/')
+# def home(request):
+    # images = Image.get_images()
+    # comments = Comment.get_comment()
+    # profile = Profile.get_profile()
