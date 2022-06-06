@@ -8,7 +8,7 @@ from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-# from .tokens import account_activation_token
+from .tokens import account_activation_token
 from django.utils.encoding import force_bytes
 from django.contrib.auth.decorators import login_required
 
@@ -30,7 +30,7 @@ def signup(request):
                 'user': current_user,
                 'domain': current_site.domain,
                 'uid':urlsafe_base64_encode(force_bytes(current_user.pk)),
-                # 'token':account_activation_token.make_token(current_user),
+                'token':account_activation_token.make_token(current_user),
             })
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(
